@@ -127,6 +127,7 @@ public class SecondActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+        System.console();
         //instance for interface
 
         MyReservationCall myReservationCall = retrofit2.create(MyReservationCall.class);
