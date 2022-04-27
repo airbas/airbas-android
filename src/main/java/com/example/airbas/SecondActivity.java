@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -47,13 +49,11 @@ import static android.content.ContentValues.TAG;
 
 public class SecondActivity extends AppCompatActivity {
 
-    //private ListView lv;
-    //https://run.mocky.io/v3/5cc133ae-9adc-4a26-96b6-bdff5d92ae99
-    //String id, firstname, secondname, birthdate, creditcard, telephone, email;
-    //ArrayList<HashMap<String,String>> profilelist;
+
     TextView txt;
     List<Reservation> reservationList;
     RecyclerView recyclerView;
+
 
 
 
@@ -67,10 +67,10 @@ public class SecondActivity extends AppCompatActivity {
         recyclerView=findViewById(R.id.recyclerView);
         reservationList=new ArrayList<>();
 
-/*
 
 
-        //http://10.0.2.2:8081/profile/details/
+
+
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:8081/profile/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -92,20 +92,23 @@ public class SecondActivity extends AppCompatActivity {
                 String s=response.body().getBirthdate();
                 String s1="";
                 String s2="";
-                s1 = s.substring(0, 10); s2 = s.substring(11, 16);
+                //s1 = s.substring(0, 10);
 
 
 
                 jsony = " First Name:            " + response.body().getFirstname() +
                         "\n Second Name:       " + response.body().getSecondname()+
-                        "\n Birthdate:              "+ s1+
-                        "\n Credit Card:           " + response.body().getCreditcard()+
-                        "\n Telephone :           " + response.body().getTelephone() +
+                        //NEED TO HANDLE NULL VALUES
+//                      "\n Birthdate:              "+ s1+
+
+
+//                        "\n Credit Card:           " + response.body().getCreditcard()+
+//                        "\n Telephone :           " + response.body().getTelephone() +
+
                         "\n Email:                     " + response.body().getEmail();
 
 
-                //txt.append(jsonfn);
-                //txt.append(jsonsn);
+
                 txt.append(jsony);
 
             }
@@ -116,22 +119,21 @@ public class SecondActivity extends AppCompatActivity {
             }
         });
 
-*/
 
 
 
 
 
         //Second Call
-        Retrofit retrofit2 = new Retrofit.Builder().baseUrl("https://run.mocky.io/v3/")
+        Retrofit retrofit2 = new Retrofit.Builder().baseUrl("http://10.0.2.2:8084/reservation/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        System.console();
+
         //instance for interface
 
         MyReservationCall myReservationCall = retrofit2.create(MyReservationCall.class);
-        Call<List<Reservation>> call2 = myReservationCall.getReservation();
+        Call<List<Reservation>> call2 = myReservationCall.getReservation(email);
 
         call2.enqueue(new Callback<List<Reservation>>() {
             @Override
@@ -165,12 +167,15 @@ public class SecondActivity extends AppCompatActivity {
 
 
 
+
+
     }
 
     private void PutDataIntoRecyclerView(List<Reservation> reservationList) {
         ReservationAdapter reservationAdapter= new ReservationAdapter(this,reservationList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(reservationAdapter);
+        recyclerView.setHasFixedSize(true);
     }
 
 

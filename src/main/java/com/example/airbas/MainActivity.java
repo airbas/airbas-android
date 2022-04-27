@@ -54,13 +54,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
-        String ipAddress = Formatter.formatIpAddress(wifiManager.getConnectionInfo().getIpAddress());*/
-
-        WifiManager wifiMgr = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
-        WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
-        int ip = wifiInfo.getIpAddress();
-        String ipAddress = Formatter.formatIpAddress(ip);
 
         email = findViewById(R.id.txtEmail);
         pass = findViewById(R.id.txtPassword);
@@ -78,18 +71,13 @@ public class MainActivity extends AppCompatActivity {
                 // validating if the text field is empty or not.
                 if (email.getText().toString().isEmpty() || pass.getText().toString().isEmpty()) {
                     Toast.makeText(MainActivity.this, "Please enter both the values", Toast.LENGTH_SHORT).show();
-                    //return;
+
                 }
                 // calling a method to post the data and passing our name and job.
-                //Login(email.getText().toString(), pass.getText().toString());
-                //String email="Abbas";
+                else {
+                    Login(email.getText().toString(), pass.getText().toString());
 
-                Intent i = new Intent(MainActivity.this, SecondActivity.class);
-                //i.putExtra("email", email);
-
-
-
-                startActivity(i);
+                }
 
             }
         });
@@ -118,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                 i.putExtra("email", email);
                 Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                 startActivity(i);
-                //finish();
+
 
             }
         }, new Response.ErrorListener() {
@@ -139,11 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 return headers;
             }
         };
-        // below line is to make
-        // a json object request.
-        //requestQueue.add(request);
-        // Adding request to request queue
-        //Volley.newRequestQueue(this).add(jsonObjReq);
+
         MySingleton.getInstance(this).addToRequestQueue(jsonObjReq);
 
     }

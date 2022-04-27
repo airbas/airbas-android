@@ -30,7 +30,12 @@ android {
         viewBinding true
     }
 }
-
+allprojects {
+    repositories {
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+    }
+}
 dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.4.1'
@@ -52,6 +57,9 @@ dependencies {
 
     //Converter for Retrofit : GSON
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    //github recycler view
+    implementation 'com.github.cachapa:ExpandableLayout:2.9.2'
 
 
 }
